@@ -10,16 +10,79 @@
       margin: 50px auto;
       line-height: 1.6;
     }
-    a { color: #0077cc; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+    }
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .loading {
+      color: #999;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <h1>Mes cours</h1>
-  <ul>
-    <li><a href="https://github.com/lorenzosegoni/nom_du_depot_cours">Voir 
-mes fichiers LaTeX sur GitHub</a></li>
-  </ul>
+  <h1>📚 Mes cours LaTeX</h1>
+  <p>Voici la liste de mes fichiers LaTeX et PDF mis à jour automatiquement depuis mon dépôt
+  <a href="https://github.com/lorenzosegoni/cours-latex" target="_blank">cours-latex</a>.</p>
+
+  <div id="file-list" class="loading">Chargement des fichiers...</div>
+
+  <p style="margin-top:40px;"><a href="/">⬅ Retour à l’accueil</a></p>
+
+  <script>
+    async function loadFiles() {
+      const repo = "lorenzosegoni/cours-latex";
+      const url = `https://api.github.com/repos/${repo}/contents/`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+          document.getElementById("file-list").innerText = "Erreur lors du chargement des fichiers.";
+          return;
+        }
+
+        const list = document.createElement("ul");
+
+        data.forEach(item => {
+          if (item.type === "file" && (item.name.endsWith(".tex") || item.name.endsWith(".pdf"))) {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${item.html_url}" target="_blank">${item.name}</a>`;
+            list.appendChild(li);
+          }
+          if (item.type === "dir") {
+            const li = document.createElement("li");
+            li.innerHTML = `📁 <a href="${item.html_url}" target="_blank">${item.name}/</a>`;
+            list.appendChild(li);
+          }
+        });
+
+        const container = document.getElementById("file-list");
+        container.classList.remove("loading");
+        container.innerHTML = "";
+        container.appendChild(list);
+
+      } catch (err) {
+        document.getElementById("file-list").innerText = "Erreur : " + err.message;
+      }
+    }
+
+    loadFiles();
+  </script>
 </body>
 </html>
-
