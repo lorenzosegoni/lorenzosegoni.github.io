@@ -2,87 +2,310 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cours – Lorenzo Segoni</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      max-width: 800px;
-      margin: 50px auto;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
       line-height: 1.6;
-    }
-    h1 {
-      text-align: center;
       color: #333;
     }
-    ul {
-      list-style-type: none;
-      padding: 0;
+    
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #222;
     }
-    li {
-      margin: 8px 0;
+    
+    .intro {
+      margin-bottom: 30px;
+      color: #555;
+      font-size: 1.05em;
     }
-    a {
+    
+    .search-container {
+      margin: 30px 0;
+    }
+    
+    #search-input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1em;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    #search-input:focus {
+      border-color: #0077cc;
+    }
+    
+    .section {
+      margin-top: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .section:last-child {
+      border-bottom: none;
+    }
+    
+    .section-title {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #222;
+      text-transform: capitalize;
+    }
+    
+    .matiere {
+      margin-bottom: 25px;
+    }
+    
+    .matiere-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .matiere-nom {
+      color: #0077cc;
+      text-decoration: underline;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+    
+    .matiere-nom:hover {
+      color: #005fa3;
+    }
+    
+    .matiere-semestre {
+      color: #999;
+      font-size: 0.95em;
+    }
+    
+    .matiere-resume {
+      color: #333;
+      margin-left: 0;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #999;
+      padding: 40px;
+    }
+    
+    .error {
+      color: #d00;
+      padding: 20px;
+      background: #fee;
+      border-radius: 5px;
+    }
+    
+    .back-link {
+      margin-top: 50px;
+      display: inline-block;
+    }
+    
+    .back-link a {
       color: #0077cc;
       text-decoration: none;
+      font-size: 1em;
     }
-    a:hover {
+    
+    .back-link a:hover {
       text-decoration: underline;
     }
-    .loading {
-      color: #999;
+    
+    .no-results {
       text-align: center;
+      color: #999;
+      padding: 40px;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
-  <h1>📚 Mes cours LaTeX</h1>
-  <p>Voici la liste de mes fichiers LaTeX et PDF mis à jour automatiquement depuis mon dépôt
-  <a href="https://github.com/lorenzosegoni/cours-latex" target="_blank">cours-latex</a>.</p>
-
-  <div id="file-list" class="loading">Chargement des fichiers...</div>
-
-  <p style="margin-top:40px;"><a href="/">⬅ Retour à l’accueil</a></p>
+  <h1>Mes cours LaTeX</h1>
+  
+  <div class="intro">
+    Voici la liste de mes cours et notes LaTeX organisés par domaine. Tous les fichiers sont automatiquement synchronisés depuis mon dépôt
+    <a href="https://github.com/lorenzosegoni/cours-latex" target="_blank" style="color: #0077cc;">cours-latex</a>.
+  </div>
+  
+  <div class="search-container">
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Rechercher une matière, section ou mot-clé..."
+    >
+  </div>
+  
+  <div id="content" class="loading">Chargement des cours...</div>
+  
+  <div class="back-link">
+    <a href="/">← Retour à l'accueil</a>
+  </div>
 
   <script>
-    async function loadFiles() {
-      const repo = "lorenzosegoni/cours-latex";
-      const url = `https://api.github.com/repos/${repo}/contents/`;
+    const REPO = "lorenzosegoni/cours-latex";
+    let allData = [];
 
+    async function fetchMetadata(folderPath) {
       try {
+        const url = `https://api.github.com/repos/${REPO}/contents/${folderPath}/metadata.json`;
         const response = await fetch(url);
+        if (!response.ok) return null;
         const data = await response.json();
-
-        if (!Array.isArray(data)) {
-          document.getElementById("file-list").innerText = "Erreur lors du chargement des fichiers.";
-          return;
-        }
-
-        const list = document.createElement("ul");
-
-        data.forEach(item => {
-          if (item.type === "file" && (item.name.endsWith(".tex") || item.name.endsWith(".pdf"))) {
-            const li = document.createElement("li");
-            li.innerHTML = `<a href="${item.html_url}" target="_blank">${item.name}</a>`;
-            list.appendChild(li);
-          }
-          if (item.type === "dir") {
-            const li = document.createElement("li");
-            li.innerHTML = `📁 <a href="${item.html_url}" target="_blank">${item.name}/</a>`;
-            list.appendChild(li);
-          }
-        });
-
-        const container = document.getElementById("file-list");
-        container.classList.remove("loading");
-        container.innerHTML = "";
-        container.appendChild(list);
-
+        const content = atob(data.content);
+        return JSON.parse(content);
       } catch (err) {
-        document.getElementById("file-list").innerText = "Erreur : " + err.message;
+        console.error(`Erreur metadata pour ${folderPath}:`, err);
+        return null;
       }
     }
 
-    loadFiles();
+    async function loadCourses() {
+      try {
+        const url = `https://api.github.com/repos/${REPO}/contents/`;
+        const response = await fetch(url);
+        const folders = await response.json();
+        
+        if (!Array.isArray(folders)) {
+          throw new Error("Format de réponse invalide");
+        }
+
+        const coursesData = {};
+
+        for (const folder of folders) {
+          if (folder.type === "dir" && folder.name.includes(".")) {
+            const [section, matiere] = folder.name.split(".");
+            
+            const metadata = await fetchMetadata(folder.name);
+            
+            if (!metadata) continue;
+
+            if (!coursesData[section]) {
+              coursesData[section] = [];
+            }
+
+            coursesData[section].push({
+              section: section,
+              matiere: matiere,
+              nom: metadata.nom || matiere.replace(/_/g, " "),
+              semestre: metadata.semestre || "",
+              resume: metadata.resume || "",
+              url: folder.html_url
+            });
+          }
+        }
+
+        allData = coursesData;
+        displayCourses(coursesData);
+        
+      } catch (err) {
+        document.getElementById("content").innerHTML = 
+          `<div class="error">Erreur lors du chargement des cours : ${err.message}</div>`;
+      }
+    }
+
+    function displayCourses(coursesData) {
+      const container = document.getElementById("content");
+      
+      if (Object.keys(coursesData).length === 0) {
+        container.innerHTML = '<div class="no-results">Aucun cours trouvé.</div>';
+        return;
+      }
+
+      container.innerHTML = "";
+
+      const sections = Object.keys(coursesData).sort();
+
+      sections.forEach(sectionName => {
+        const section = document.createElement("div");
+        section.className = "section";
+        section.dataset.section = sectionName.toLowerCase();
+
+        const title = document.createElement("h2");
+        title.className = "section-title";
+        title.textContent = sectionName.replace(/_/g, " ");
+        section.appendChild(title);
+
+        coursesData[sectionName].forEach(course => {
+          const matiereDiv = document.createElement("div");
+          matiereDiv.className = "matiere";
+          matiereDiv.dataset.keywords = `${sectionName} ${course.nom} ${course.resume}`.toLowerCase();
+
+          const header = document.createElement("div");
+          header.className = "matiere-header";
+
+          const nomLink = document.createElement("a");
+          nomLink.href = course.url;
+          nomLink.target = "_blank";
+          nomLink.className = "matiere-nom";
+          nomLink.textContent = course.nom;
+
+          const semestre = document.createElement("span");
+          semestre.className = "matiere-semestre";
+          semestre.textContent = course.semestre;
+
+          header.appendChild(nomLink);
+          header.appendChild(semestre);
+
+          const resume = document.createElement("div");
+          resume.className = "matiere-resume";
+          resume.textContent = course.resume;
+
+          matiereDiv.appendChild(header);
+          matiereDiv.appendChild(resume);
+          section.appendChild(matiereDiv);
+        });
+
+        container.appendChild(section);
+      });
+    }
+
+    function filterCourses(searchTerm) {
+      const term = searchTerm.toLowerCase().trim();
+      
+      if (term === "") {
+        displayCourses(allData);
+        return;
+      }
+
+      const filtered = {};
+
+      Object.keys(allData).forEach(section => {
+        const matchingCourses = allData[section].filter(course => {
+          const searchText = `${section} ${course.nom} ${course.resume}`.toLowerCase();
+          return searchText.includes(term);
+        });
+
+        if (matchingCourses.length > 0) {
+          filtered[section] = matchingCourses;
+        }
+      });
+
+      displayCourses(filtered);
+    }
+
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      filterCourses(e.target.value);
+    });
+
+    loadCourses();
   </script>
 </body>
 </html>
