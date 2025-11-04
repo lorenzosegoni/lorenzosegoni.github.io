@@ -99,6 +99,55 @@
     .matiere-resume {
       color: #333;
       margin-left: 0;
+      margin-bottom: 10px;
+    }
+    
+    .fichiers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .fichier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+      border: 1px solid;
+    }
+    
+    .fichier-badge.pdf {
+      background-color: #fff5f5;
+      border-color: #e85d75;
+      color: #c7254e;
+    }
+    
+    .fichier-badge.pdf:hover {
+      background-color: #ffe6e9;
+      transform: translateY(-1px);
+    }
+    
+    .fichier-badge.html {
+      background-color: #f0f9ff;
+      border-color: #60a5fa;
+      color: #1e40af;
+    }
+    
+    .fichier-badge.html:hover {
+      background-color: #dbeafe;
+      transform: translateY(-1px);
+    }
+    
+    .fichier-type {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
     }
     
     .loading {
@@ -216,7 +265,8 @@
               nom: metadata.nom || matiere.replace(/_/g, " "),
               semestre: metadata.semestre || "",
               resume: metadata.resume || "",
-              url: folder.html_url
+              url: folder.html_url,
+              fichiers: metadata.fichiers || []
             });
           }
         }
@@ -279,6 +329,36 @@
 
           matiereDiv.appendChild(header);
           matiereDiv.appendChild(resume);
+          
+          // Afficher les fichiers
+          if (course.fichiers && course.fichiers.length > 0) {
+            const fichiersContainer = document.createElement("div");
+            fichiersContainer.className = "fichiers-container";
+            
+            course.fichiers.forEach(fichier => {
+              const extension = fichier.fichier.split('.').pop().toLowerCase();
+              const baseUrl = `https://github.com/${REPO}/blob/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+              
+              const badge = document.createElement("a");
+              badge.href = baseUrl;
+              badge.target = "_blank";
+              badge.className = `fichier-badge ${extension}`;
+              
+              const nomSpan = document.createElement("span");
+              nomSpan.textContent = fichier.nom;
+              
+              const typeSpan = document.createElement("span");
+              typeSpan.className = "fichier-type";
+              typeSpan.textContent = extension.toUpperCase();
+              
+              badge.appendChild(nomSpan);
+              badge.appendChild(typeSpan);
+              fichiersContainer.appendChild(badge);
+            });
+            
+            matiereDiv.appendChild(fichiersContainer);
+          }
+          
           section.appendChild(matiereDiv);
         });
 
