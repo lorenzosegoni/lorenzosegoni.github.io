@@ -169,7 +169,16 @@
         const response = await fetch(url);
         if (!response.ok) return null;
         const data = await response.json();
-        const content = atob(data.content);
+        
+        // Décodage UTF-8 correct
+        const binaryString = atob(data.content);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const decoder = new TextDecoder('utf-8');
+        const content = decoder.decode(bytes);
+        
         return JSON.parse(content);
       } catch (err) {
         console.error(`Erreur metadata pour ${folderPath}:`, err);
