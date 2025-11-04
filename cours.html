@@ -337,10 +337,19 @@
             
             course.fichiers.forEach(fichier => {
               const extension = fichier.fichier.split('.').pop().toLowerCase();
-              const baseUrl = `https://github.com/${REPO}/blob/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+              let fileUrl;
+              
+              if (extension === 'html') {
+                // Pour HTML : utiliser htmlpreview pour afficher le rendu
+                const rawUrl = `https://raw.githubusercontent.com/${REPO}/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+                fileUrl = `https://htmlpreview.github.io/?${rawUrl}`;
+              } else {
+                // Pour PDF et autres : lien GitHub normal
+                fileUrl = `https://github.com/${REPO}/blob/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+              }
               
               const badge = document.createElement("a");
-              badge.href = baseUrl;
+              badge.href = fileUrl;
               badge.target = "_blank";
               badge.className = `fichier-badge ${extension}`;
               
