@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorenzo Segoni - CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* Navigation */
+        nav {
+            background: #2c3e50;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            font-size: 0.95em;
+            transition: background 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        nav a:hover {
+            background: #34495e;
+            border-bottom-color: #3498db;
+        }
+
+        /* Header avec photo */
+        header {
+            display: flex;
+            gap: 30px;
+            padding: 40px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            align-items: flex-start;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            flex-shrink: 0;
+            color: #95a5a6;
+        }
+
+        .header-content h1 {
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .header-content p {
+            font-size: 1.1em;
+            color: #ecf0f1;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.95em;
+        }
+
+        .contact-info a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: #3498db;
+        }
+
+        .contact-info span {
+            color: #ecf0f1;
+        }
+
+        /* Contenu principal */
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 35px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 1.7em;
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 1.15em;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .institution {
+            color: #34495e;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        /* Formation */
+        .formation-item {
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .formation-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .formation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .formation-header h3 {
+            margin: 0;
+        }
+
+        /* Expérience */
+        .experience-item {
+            margin-bottom: 20px;
+            padding: 18px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .experience-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.1);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .experience-header h3 {
+            margin: 0;
+        }
+
+        /* Compétences */
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 6px;
+            border-left: 3px solid #3498db;
+            transition: transform 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-2px);
+        }
+
+        .skill-category strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .skill-category p {
+            color: #555;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* Filtrage compétences */
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 14px;
+            background: #ecf0f1;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            color: #2c3e50;
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .filter-btn:hover {
+            border-color: #3498db;
+        }
+
+        /* Projets */
+        .project-item {
+            margin-bottom: 18px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-header h3 {
+            margin: 0;
+        }
+
+        .project-link {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .project-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        /* Listes */
+        ul {
+            margin-left: 20px;
+            margin-bottom: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        /* Footer avec boutons */
+        .footer {
+            background: #2c3e50;
+            padding: 30px 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .download-btn {
+            padding: 12px 24px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            border: 2px solid #3498db;
+            cursor: pointer;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
+            border-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .footer-text {
+            font-size: 0.9em;
+            color: #bdc3c7;
+        }
+
+        /* Media queries */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 20px;
+                padding: 30px 20px;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+
+            .formation-header,
+            .experience-header,
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                padding: 0;
+            }
+
+            nav a {
+                padding: 10px 12px;
+                font-size: 0.85em;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+            }
+
+            .download-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            nav, .footer {
+                display: none;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#formation">Formation</a></li>
+            <li><a href="#experience">Expérience</a></li>
+            <li><a href="#competences">Compétences</a></li>
+            <li><a href="#projets">Projets</a></li>
+            <li><a href="#interets">Centres d'Intérêt</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Header avec photo -->
+        <header>
+            <div class="profile-photo">👨‍💼</div>
+            <div class="header-content">
+                <h1>Lorenzo Segoni</h1>
+                <p>Étudiant en Ingénierie Mathématique & Biostatistique</p>
+                <div class="contact-info">
+                    <span>Paris, France (75012)</span>
+                    <span>Permis B</span>
+                    <a href="mailto:segonilorenzo2003@gmail.com">segonilorenzo2003@gmail.com</a>
+                    <a href="tel:+33784822287">+33 7 84 82 22 87</a>
+                    <a href="https://github.com/lorenzosegoni" target="_blank">GitHub</a>
+                    <a href="https://www.linkedin.com/in/lorenzo-segoni-88289924b/" target="_blank">LinkedIn</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <!-- Formation -->
+            <section id="formation">
+                <h2>Formation</h2>
+
+                <div class="formation-item">
+                    <div class="formation-header">
+                        <h3>Master 1 - Ingénierie Mathématique et Biostatistique</h3>
+                        <span class="date">Sept 2025 - Présent</span>
+                    </div>
+                    <p class="institution">Université Paris Cité</p>
+                    <p>Statistiques, Mathématiques appliquées, Bases de données, Analyse de données.</p>
+                </div>
+
+                <div class="formation-item">
+                    <div class="formation-header">
+                        <h3>LDD3 Mathématiques & Sciences de la Vie</h3>
+                        <span class="date">Sept 2024 - Juin 2025</span>
+                    </div>
+                    <p class="institution">Université Paris-Saclay (Orsay)</p>
+                    <p>Niveau Licence de Mathématiques. Analyse, Algèbre, Probabilités/Statistiques, Biologie Santé/Environnement.</p>
+                    <p><strong>Distinctions :</strong> Invité au concours Agro-Veto</p>
+                    <p><strong>Projet de fin d'étude :</strong> Réseaux de neurones et réseaux biologiques</p>
+                </div>
+
+                <div class="formation-item">
+                    <div class="formation-header">
+                        <h3>CPGE BCPST</h3>
+                        <span class="date">Sept 2022 - Juin 2024</span>
+                    </div>
+                    <p class="institution">Lycée Fénelon, Paris (75006)</p>
+                    <p>Biologie, Chimie, Physique et Sciences de la Terre. Compétences intensives en Mathématiques, Info, Physique-Chimie et SVT.</p>
+                    <p><strong>Projet TIPE :</strong> Étude sur la magnésie d'escalade (propriétés physico-chimiques et impacts)</p>
+                    <p><strong>Projet Individuel :</strong> Introduction aux réseaux de neurones</p>
+                </div>
+
+                <div class="formation-item">
+                    <div class="formation-header">
+                        <h3>Liceo Scientifico Tradizionale</h3>
+                        <span class="date">2016 - 2022</span>
+                    </div>
+                    <p class="institution">Giovanni da Castiglione, Italie</p>
+                </div>
+            </section>
+
+            <!-- Expérience -->
+            <section id="experience">
+                <h2>Expérience Professionnelle</h2>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Interrogateur en Informatique (Colleur) - CPGE BCPST 2</h3>
+                        <span class="date">Sept 2025 - Présent</span>
+                    </div>
+                    <p class="institution">Lycée Fénelon, Paris</p>
+                    <ul>
+                        <li>Enseignement et travaux pratiques de Python pour des groupes de 18 étudiants</li>
+                        <li>Création de sujets, correction et évaluation (CC)</li>
+                        <li>Concepts enseignés : Boucles, probabilités, bibliothèques (NumPy, Matplotlib), fonctions récursives</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Éditeur LaTeX & Créateur de contenu mathématique</h3>
+                        <span class="date">Sept 2024 - Mars 2025</span>
+                    </div>
+                    <p class="institution">Indépendant - Pour professeur de Mathématiques (Prépa BCPST 2)</p>
+                    <ul>
+                        <li>Transcription de cours manuscrits en LaTeX professionnel</li>
+                        <li>Création et composition d'exercices de TD et de contrôles (CC)</li>
+                        <li>Rédaction de corrections détaillées</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <h3>Stage de Recherche : Phylogénétique des levures</h3>
+                        <span class="date">Juin 2021</span>
+                    </div>
+                    <p class="institution">Université de Perugia (Distanciel)</p>
+                    <ul>
+                        <li>Recherche sur la classification phylogénétique et les espèces de levures</li>
+                        <li>Utilisation du logiciel MEGA pour l'analyse de données biologiques</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Compétences -->
+            <section id="competences">
+                <h2>Compétences Techniques</h2>
+                
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterSkills('all')">Tous</button>
+                    <button class="filter-btn" onclick="filterSkills('languages')">Langages</button>
+                    <button class="filter-btn" onclick="filterSkills('datascience')">Data Science</button>
+                    <button class="filter-btn" onclick="filterSkills('tools')">Outils</button>
+                </div>
+
+                <div class="skills-container">
+                    <div class="skill-category" data-category="languages">
+                        <strong>Langages & Scripting</strong>
+                        <p>Python, R, LaTeX, HTML, YAML, Excel (Scripting)</p>
+                    </div>
+                    <div class="skill-category" data-category="tools">
+                        <strong>Contrôle de Version & Bases de Données</strong>
+                        <p>Git, SQL</p>
+                    </div>
+                    <div class="skill-category" data-category="datascience">
+                        <strong>Data Science (Python)</strong>
+                        <p>NumPy, Pandas, PyTorch, Matplotlib, Keras</p>
+                    </div>
+                    <div class="skill-category" data-category="datascience">
+                        <strong>Data Science (R)</strong>
+                        <p>tidyverse, gganimate, av, ellmer</p>
+                    </div>
+                    <div class="skill-category" data-category="languages">
+                        <strong>Langues</strong>
+                        <p><strong>Italien :</strong> Langue maternelle<br>
+                        <strong>Français :</strong> Bilingue / Langue maternelle<br>
+                        <strong>Anglais :</strong> C1 (Avancé)<br>
+                        <strong>Espagnol :</strong> A2 (Élémentaire)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projets -->
+            <section id="projets">
+                <h2>Projets</h2>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <h3>Réseaux de neurones et réseaux biologiques</h3>
+                        <span class="date">2024 - 2025</span>
+                    </div>
+                    <p class="institution">Projet de fin d'études - Université Paris-Saclay</p>
+                    <p>Étude comparative entre les architectures des réseaux de neurones artificiels et les systèmes biologiques. Implémentation avec PyTorch et analyse statistique des résultats.</p>
+                    <p><a href="#" class="project-link">Code source (bientôt disponible)</a></p>
+                </div>
+
+                <div class="project-item">
+                    <div class="project-header">
+                        <h3>Étude sur la magnésie d'escalade</h3>
+                        <span class="date">2022 - 2024</span>
+                    </div>
+                    <p class="institution">Projet TIPE - Lycée Fénelon</p>
+                    <p>Analyse des propriétés physico-chimiques de la magnésie utilisée en escalade et évaluation de ses impacts environnementaux. Présentation et défense auprès du jury CPGE.</p>
+                </div>
+            </section>
+
+            <!-- Centres d'Intérêt -->
+            <section id="interets">
+                <h2>Centres d'Intérêt & Distinctions</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">Mathématiques</strong>
+                        <p style="color: #555; font-size: 0.9em;">Participation aux Olympiades de Mathématiques, Concours Kangourou et Concorso Bocconi</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">Musique (Violon)</strong>
+                        <p style="color: #555; font-size: 0.9em;">Pratique depuis 15 ans. Primo Premio Italo Marconi (4ème au classement global), Rassegna Musicale Arezzo</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">Natation</strong>
+                        <p style="color: #555; font-size: 0.9em;">Pratique libre, plus de 10 ans d'expérience</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 6px;">
+                        <strong style="color: #2c3e50; display: block; margin-bottom: 8px;">Escalade</strong>
+                        <p style="color: #555; font-size: 0.9em;">Membre du club Vertical 12 (FSGT Paris 12ème)</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer avec boutons de téléchargement -->
+        <div class="footer">
+            <div class="download-buttons">
+                <button class="download-btn" onclick="downloadPDF('fr')">Télécharger PDF (Français)</button>
+                <button class="download-btn" onclick="downloadPDF('en')">Download PDF (English)</button>
+            </div>
+            <p class="footer-text">Dernière mise à jour : <span id="update-date"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Afficher la date de dernière mise à jour
+        document.getElementById('update-date').textContent = new Date().toLocaleDateString('fr-FR');
+
+        // Filtre des compétences
+        function filterSkills(category) {
+            const items = document.querySelectorAll('.skill-category');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Téléchargement PDF (simulé - nécessite une implémentation serveur)
+        function downloadPDF(lang) {
+            alert(`Téléchargement CV en ${lang === 'fr' ? 'français' : 'anglais'} en préparation...\n\nPour l'instant, utilisez Ctrl+P (ou Cmd+P sur Mac) pour imprimer en PDF.`);
+        }
+    </script>
+</body>
+</html>
