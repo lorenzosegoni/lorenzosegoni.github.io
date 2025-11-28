@@ -19,29 +19,29 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
             line-height: 1.6;
-            color: #1a1a1a;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #2a2a2a;
+            background: #ffffff;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto;
-            background: white;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            background: #ffffff;
         }
 
         /* Navigation Sticky */
         nav {
-            background: rgba(255, 255, 255, 0.95);
+            background: #ffffff;
             backdrop-filter: blur(10px);
             padding: 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
             transform: translateY(-100%);
             transition: transform 0.3s ease;
+            border-bottom: 1px solid #e8e8e8;
         }
 
         nav.visible {
@@ -54,23 +54,23 @@
             justify-content: center;
             flex-wrap: wrap;
             padding: 0;
-            max-width: 920px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
         nav a {
             display: block;
-            color: #1a1a1a;
+            color: #555555;
             text-decoration: none;
             padding: 12px 18px;
-            font-size: 0.9em;
+            font-size: 0.85em;
             font-weight: 500;
             transition: color 0.2s;
             position: relative;
         }
 
         nav a:hover {
-            color: #0066cc;
+            color: #2a2a2a;
         }
 
         nav a::after {
@@ -79,25 +79,26 @@
             bottom: 8px;
             left: 50%;
             width: 0;
-            height: 2px;
-            background: #0066cc;
+            height: 1px;
+            background: #2a2a2a;
             transition: all 0.3s;
             transform: translateX(-50%);
         }
 
         nav a:hover::after {
-            width: 60%;
+            width: 40%;
         }
 
-        /* Header Hero */
+        /* Header */
         header {
             display: flex;
             gap: 35px;
-            padding: 50px 45px;
-            background: linear-gradient(135deg, #0a2463 0%, #247ba0 100%);
-            color: white;
+            padding: 50px 50px;
+            background: #fafafa;
+            color: #2a2a2a;
             align-items: flex-start;
             animation: slideDown 0.6s ease;
+            border-bottom: 1px solid #e8e8e8;
         }
 
         @keyframes slideDown {
@@ -114,12 +115,12 @@
         .profile-photo {
             width: 160px;
             height: 160px;
-            border-radius: 12px;
+            border-radius: 8px;
             flex-shrink: 0;
-            background: white;
+            background: #f0f0f0;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border: 3px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e8e8e8;
         }
 
         .profile-photo img {
@@ -129,15 +130,16 @@
         }
 
         .header-content h1 {
-            font-size: 2.5em;
+            font-size: 2.4em;
             margin-bottom: 6px;
             font-weight: 700;
             letter-spacing: -0.5px;
+            color: #1a1a1a;
         }
 
         .title-line {
-            font-size: 1.2em;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            color: #555555;
             margin-bottom: 18px;
             font-weight: 400;
         }
@@ -146,25 +148,25 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            font-size: 0.95em;
+            font-size: 0.9em;
         }
 
         .contact-info a,
         .contact-info span {
-            color: rgba(255, 255, 255, 0.85);
+            color: #666666;
             text-decoration: none;
             transition: color 0.2s;
         }
 
         .contact-info a:hover {
-            color: #ffd700;
+            color: #2a2a2a;
         }
 
         /* Profil Section */
         .profil-section {
-            padding: 40px 45px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            padding: 40px 50px;
+            background: #ffffff;
+            border-bottom: 1px solid #e8e8e8;
             animation: fadeIn 0.8s ease 0.2s both;
         }
 
@@ -179,20 +181,20 @@
 
         .profil-content {
             max-width: 100%;
-            font-size: 1em;
-            color: #333;
+            font-size: 0.95em;
+            color: #444444;
             line-height: 1.8;
             margin: 0;
         }
 
         .profil-content strong {
-            color: #0066cc;
+            color: #1a1a1a;
             font-weight: 600;
         }
 
         /* Main Content */
         .content {
-            padding: 45px;
+            padding: 50px;
         }
 
         section {
@@ -218,31 +220,30 @@
         section:nth-child(5) { animation-delay: 0.5s; }
 
         h2 {
-            font-size: 1.6em;
-            color: #0a2463;
+            font-size: 1.5em;
+            color: #1a1a1a;
             margin-bottom: 28px;
             font-weight: 700;
             padding-bottom: 12px;
-            border-bottom: 3px solid #0066cc;
-            display: inline-block;
+            border-bottom: 1px solid #d8d8d8;
         }
 
         h3 {
-            font-size: 1.1em;
-            color: #0a2463;
+            font-size: 1.05em;
+            color: #1a1a1a;
             margin-bottom: 4px;
             font-weight: 600;
         }
 
         .date {
-            color: #666;
-            font-size: 0.9em;
+            color: #888888;
+            font-size: 0.85em;
             font-weight: 500;
         }
 
         .institution {
-            color: #0066cc;
-            font-size: 0.95em;
+            color: #555555;
+            font-size: 0.9em;
             margin-bottom: 8px;
             font-weight: 600;
         }
@@ -251,7 +252,7 @@
         .item {
             margin-bottom: 28px;
             padding-bottom: 24px;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #e8e8e8;
             transition: transform 0.3s ease;
         }
 
@@ -262,7 +263,7 @@
         }
 
         .item:hover {
-            transform: translateX(4px);
+            transform: translateX(2px);
         }
 
         .item-header {
@@ -280,19 +281,19 @@
         }
 
         .item-description {
-            color: #555;
-            font-size: 0.95em;
+            color: #555555;
+            font-size: 0.9em;
             line-height: 1.7;
             margin-top: 8px;
         }
 
         /* Experience Items */
         .experience-item {
-            background: linear-gradient(135deg, #f0f4f8 0%, #f9f9f9 100%);
+            background: #fafafa;
             padding: 22px;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-bottom: 18px;
-            border-left: 4px solid #0066cc;
+            border-left: 3px solid #d8d8d8;
             transition: all 0.3s ease;
         }
 
@@ -301,8 +302,8 @@
         }
 
         .experience-item:hover {
-            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.12);
-            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-left-color: #999999;
         }
 
         .experience-item h3 {
@@ -316,8 +317,8 @@
 
         .experience-item li {
             margin-bottom: 8px;
-            color: #555;
-            font-size: 0.95em;
+            color: #555555;
+            font-size: 0.9em;
             line-height: 1.6;
         }
 
@@ -330,40 +331,41 @@
         }
 
         .skill-box {
-            background: linear-gradient(135deg, #f0f4f8 0%, #f9f9f9 100%);
+            background: #fafafa;
             padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #0066cc;
+            border-radius: 6px;
+            border-left: 3px solid #d8d8d8;
             transition: all 0.3s ease;
         }
 
         .skill-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.12);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-left-color: #999999;
         }
 
         .skill-box strong {
-            color: #0a2463;
+            color: #1a1a1a;
             display: block;
             margin-bottom: 10px;
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-weight: 600;
         }
 
         .skill-box p {
-            color: #555;
-            font-size: 0.9em;
+            color: #555555;
+            font-size: 0.85em;
             line-height: 1.6;
             margin: 0;
         }
 
         /* Projects */
         .project-item {
-            background: linear-gradient(135deg, #f0f4f8 0%, #f9f9f9 100%);
+            background: #fafafa;
             padding: 22px;
-            border-radius: 8px;
+            border-radius: 6px;
             margin-bottom: 18px;
-            border-left: 4px solid #0066cc;
+            border-left: 3px solid #d8d8d8;
             transition: all 0.3s ease;
         }
 
@@ -372,8 +374,8 @@
         }
 
         .project-item:hover {
-            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.12);
-            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-left-color: #999999;
         }
 
         .project-item h3 {
@@ -382,8 +384,8 @@
 
         .project-item p {
             margin: 8px 0;
-            font-size: 0.95em;
-            color: #555;
+            font-size: 0.9em;
+            color: #555555;
             line-height: 1.7;
         }
 
@@ -396,39 +398,41 @@
         }
 
         .interest-box {
-            background: linear-gradient(135deg, #f0f4f8 0%, #f9f9f9 100%);
+            background: #fafafa;
             padding: 18px;
-            border-radius: 8px;
-            border-left: 4px solid #0066cc;
+            border-radius: 6px;
+            border-left: 3px solid #d8d8d8;
             transition: all 0.3s ease;
         }
 
         .interest-box:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border-left-color: #999999;
         }
 
         .interest-box strong {
-            color: #0a2463;
+            color: #1a1a1a;
             display: block;
             margin-bottom: 8px;
-            font-size: 0.95em;
+            font-size: 0.9em;
             font-weight: 600;
         }
 
         .interest-box p {
-            color: #555;
-            font-size: 0.9em;
+            color: #555555;
+            font-size: 0.85em;
             margin: 0;
             line-height: 1.6;
         }
 
         /* Footer */
         .footer {
-            background: linear-gradient(135deg, #0a2463 0%, #247ba0 100%);
-            padding: 35px 45px;
+            background: #fafafa;
+            padding: 35px 50px;
             text-align: center;
-            color: white;
+            color: #2a2a2a;
+            border-top: 1px solid #e8e8e8;
         }
 
         .download-buttons {
@@ -440,28 +444,28 @@
         }
 
         .download-btn {
-            padding: 12px 28px;
-            background: #ffd700;
-            color: #0a2463;
+            padding: 11px 26px;
+            background: #2a2a2a;
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.95em;
+            border-radius: 4px;
+            font-size: 0.9em;
             transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .download-btn:hover {
-            background: #ffed4e;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+            background: #1a1a1a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .footer-text {
-            font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85em;
+            color: #888888;
             margin: 0;
         }
 
@@ -517,7 +521,7 @@
             }
 
             h2 {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
 
             .skills-grid,
@@ -532,7 +536,7 @@
 
             nav a {
                 padding: 10px 12px;
-                font-size: 0.85em;
+                font-size: 0.8em;
             }
 
             .download-buttons {
@@ -566,11 +570,11 @@
                 <h1>Lorenzo Segoni</h1>
                 <p class="title-line">Data Scientist & Ingénieur Mathématique</p>
                 <div class="contact-info">
-                    <span>📍 Paris, France</span>
-                    <a href="mailto:segonilorenzo2003@gmail.com">✉️ segonilorenzo2003@gmail.com</a>
-                    <a href="tel:+33784822287">📱 +33 7 84 82 22 87</a>
-                    <a href="https://github.com/lorenzosegoni" target="_blank">🔗 GitHub</a>
-                    <a href="https://www.linkedin.com/in/lorenzo-segoni-88289924b/" target="_blank">💼 LinkedIn</a>
+                    <span>Paris, France</span>
+                    <a href="mailto:segonilorenzo2003@gmail.com">segonilorenzo2003@gmail.com</a>
+                    <a href="tel:+33784822287">+33 7 84 82 22 87</a>
+                    <a href="https://github.com/lorenzosegoni" target="_blank">GitHub</a>
+                    <a href="https://www.linkedin.com/in/lorenzo-segoni-88289924b/" target="_blank">LinkedIn</a>
                 </div>
             </div>
         </header>
@@ -578,7 +582,7 @@
         <!-- Profil -->
         <div class="profil-section">
             <p class="profil-content">
-                <strong>Profil :</strong> Passionné par l'analyse de données et la modélisation mathématique, je suis actuellement en Master 1 Ingénierie Mathématique & Biostatistique à l'Université Paris Cité. Fort d'une solide formation en mathématiques appliquées, programmation (Python, R) et data science, j'apporte une expertise technique combinée avec une expérience pratique en enseignement et recherche scientifique. Capable de transformer des données complexes en insights actionnables et de communiquer efficacement avec les équipes techniques et non-techniques.
+                <strong>Profil :</strong> Étudiant en Master 1 Ingénierie Mathématique & Biostatistique, je combine compétences en mathématiques appliquées, data science et programmation pour analyser, modéliser et comprendre des phénomènes complexes, notamment dans les applications biologiques. 
             </p>
         </div>
 
@@ -756,8 +760,8 @@
         <!-- Footer -->
         <div class="footer">
             <div class="download-buttons">
-                <button class="download-btn" onclick="downloadPDF('Français')">⬇ Télécharger PDF (FR)</button>
-                <button class="download-btn" onclick="downloadPDF('English')">⬇ Download PDF (EN)</button>
+                <button class="download-btn" onclick="downloadPDF('Français')">Télécharger PDF (FR)</button>
+                <button class="download-btn" onclick="downloadPDF('English')">Download PDF (EN)</button>
             </div>
             <p class="footer-text">Dernière mise à jour : <span id="update-date"></span></p>
         </div>
