@@ -243,9 +243,9 @@
 
             <div class="item">
                 <div class="item-header">
-                    <h3 data-fr="Licence de Mathématiques (Parcours Double Diplôme Math-Bio)"
-                        data-en=Bachelor’s Degree in Mathematics (Dual Degree Program in Mathematics and Biology)">
-                        Licence de Mathématiques (Parcours Double Diplôme Math-Bio)</h3>
+                    <h3 data-fr="Licence Double Diplôme 3 — Mathématiques &amp; Sciences de la Vie"
+                        data-en="Bachelor Double Degree — Mathematics &amp; Life Sciences">
+                        Licence Double Diplôme 3 — Mathématiques &amp; Sciences de la Vie</h3>
                     <span class="date">2024 – 2025</span>
                 </div>
                 <p class="institution">Université Paris-Saclay (Orsay)</p>
@@ -536,4 +536,13 @@
     let currentLang = 'fr';
 
     function switchLang() {
-        currentLang = currentLang ==
+        currentLang = currentLang === 'fr' ? 'en' : 'fr';
+        document.querySelectorAll('[data-fr][data-en]').forEach(el => {
+            el.innerHTML = el.getAttribute('data-' + currentLang);
+        });
+        document.documentElement.lang = currentLang;
+    }
+</script>
+
+</body>
+</html>
