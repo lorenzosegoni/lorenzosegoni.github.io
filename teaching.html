@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cours – Lorenzo Segoni</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      color: #333;
+    }
+    
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #222;
+    }
+    
+    .intro {
+      margin-bottom: 30px;
+      color: #555;
+      font-size: 1.05em;
+    }
+    
+    .search-container {
+      margin: 30px 0;
+    }
+    
+    #search-input {
+      width: 100%;
+      padding: 12px 15px;
+      font-size: 1em;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    
+    #search-input:focus {
+      border-color: #0077cc;
+    }
+    
+    .section {
+      margin-top: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .section:last-child {
+      border-bottom: none;
+    }
+    
+    .section-title {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #222;
+      text-transform: capitalize;
+    }
+    
+    .matiere {
+      margin-bottom: 25px;
+    }
+    
+    .matiere-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .matiere-nom {
+      color: #0077cc;
+      text-decoration: underline;
+      font-size: 1.2em;
+      font-weight: 500;
+    }
+    
+    .matiere-nom:hover {
+      color: #005fa3;
+    }
+    
+    .matiere-semestre {
+      color: #999;
+      font-size: 0.95em;
+    }
+    
+    .matiere-resume {
+      color: #333;
+      margin-left: 0;
+      margin-bottom: 10px;
+    }
+    
+    .fichiers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .fichier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+      border: 1px solid;
+    }
+    
+    .fichier-badge.pdf {
+      background-color: #fff5f5;
+      border-color: #e85d75;
+      color: #c7254e;
+    }
+    
+    .fichier-badge.pdf:hover {
+      background-color: #ffe6e9;
+      transform: translateY(-1px);
+    }
+    
+    .fichier-badge.html {
+      background-color: #f0f9ff;
+      border-color: #60a5fa;
+      color: #1e40af;
+    }
+    
+    .fichier-badge.html:hover {
+      background-color: #dbeafe;
+      transform: translateY(-1px);
+    }
+    
+    .fichier-type {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .loading {
+      text-align: center;
+      color: #999;
+      padding: 40px;
+    }
+    
+    .error {
+      color: #d00;
+      padding: 20px;
+      background: #fee;
+      border-radius: 5px;
+    }
+    
+    .back-link {
+      margin-top: 50px;
+      display: inline-block;
+    }
+    
+    .back-link a {
+      color: #0077cc;
+      text-decoration: none;
+      font-size: 1em;
+    }
+    
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+    
+    .no-results {
+      text-align: center;
+      color: #999;
+      padding: 40px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mes cours LaTeX</h1>
+  
+  <div class="intro">
+    Voici la liste de mes cours et notes LaTeX organisés par domaine. Tous les fichiers sont automatiquement synchronisés depuis mon dépôt
+    <a href="https://github.com/lorenzosegoni/teaching" target="_blank" style="color: #0077cc;">teaching</a>.
+  </div>
+  
+  <div class="search-container">
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Rechercher une matière, section ou mot-clé..."
+    >
+  </div>
+  
+  <div id="content" class="loading">Chargement des cours...</div>
+  
+  <div class="back-link">
+    <a href="/">← Retour à l'accueil</a>
+  </div>
+
+  <script>
+    const REPO = "lorenzosegoni/cours-latex";
+    let allData = [];
+
+    async function fetchMetadata(folderPath) {
+      try {
+        const url = `https://api.github.com/repos/${REPO}/contents/${folderPath}/metadata.json`;
+        const response = await fetch(url);
+        if (!response.ok) return null;
+        const data = await response.json();
+        
+        // Décodage UTF-8 correct
+        const binaryString = atob(data.content);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const decoder = new TextDecoder('utf-8');
+        const content = decoder.decode(bytes);
+        
+        return JSON.parse(content);
+      } catch (err) {
+        console.error(`Erreur metadata pour ${folderPath}:`, err);
+        return null;
+      }
+    }
+
+    async function loadCourses() {
+      try {
+        const url = `https://api.github.com/repos/${REPO}/contents/`;
+        const response = await fetch(url);
+        const folders = await response.json();
+        
+        if (!Array.isArray(folders)) {
+          throw new Error("Format de réponse invalide");
+        }
+
+        const coursesData = {};
+
+        for (const folder of folders) {
+          if (folder.type === "dir" && folder.name.includes(".")) {
+            const [section, matiere] = folder.name.split(".");
+            
+            const metadata = await fetchMetadata(folder.name);
+            
+            if (!metadata) continue;
+
+            if (!coursesData[section]) {
+              coursesData[section] = [];
+            }
+
+            coursesData[section].push({
+              section: section,
+              matiere: matiere,
+              nom: metadata.nom || matiere.replace(/_/g, " "),
+              semestre: metadata.semestre || "",
+              resume: metadata.resume || "",
+              url: folder.html_url,
+              fichiers: metadata.fichiers || []
+            });
+          }
+        }
+
+        allData = coursesData;
+        displayCourses(coursesData);
+        
+      } catch (err) {
+        document.getElementById("content").innerHTML = 
+          `<div class="error">Erreur lors du chargement des cours : ${err.message}</div>`;
+      }
+    }
+
+    function displayCourses(coursesData) {
+      const container = document.getElementById("content");
+      
+      if (Object.keys(coursesData).length === 0) {
+        container.innerHTML = '<div class="no-results">Aucun cours trouvé.</div>';
+        return;
+      }
+
+      container.innerHTML = "";
+
+      const sections = Object.keys(coursesData).sort();
+
+      sections.forEach(sectionName => {
+        const section = document.createElement("div");
+        section.className = "section";
+        section.dataset.section = sectionName.toLowerCase();
+
+        const title = document.createElement("h2");
+        title.className = "section-title";
+        title.textContent = sectionName.replace(/_/g, " ");
+        section.appendChild(title);
+
+        coursesData[sectionName].forEach(course => {
+          const matiereDiv = document.createElement("div");
+          matiereDiv.className = "matiere";
+          matiereDiv.dataset.keywords = `${sectionName} ${course.nom} ${course.resume}`.toLowerCase();
+
+          const header = document.createElement("div");
+          header.className = "matiere-header";
+
+          const nomLink = document.createElement("a");
+          nomLink.href = course.url;
+          nomLink.target = "_blank";
+          nomLink.className = "matiere-nom";
+          nomLink.textContent = course.nom;
+
+          const semestre = document.createElement("span");
+          semestre.className = "matiere-semestre";
+          semestre.textContent = course.semestre;
+
+          header.appendChild(nomLink);
+          header.appendChild(semestre);
+
+          const resume = document.createElement("div");
+          resume.className = "matiere-resume";
+          resume.textContent = course.resume;
+
+          matiereDiv.appendChild(header);
+          matiereDiv.appendChild(resume);
+          
+          // Afficher les fichiers
+          if (course.fichiers && course.fichiers.length > 0) {
+            const fichiersContainer = document.createElement("div");
+            fichiersContainer.className = "fichiers-container";
+            
+            course.fichiers.forEach(fichier => {
+              const extension = fichier.fichier.split('.').pop().toLowerCase();
+              let fileUrl;
+              
+              if (extension === 'html') {
+                // Pour HTML : utiliser htmlpreview pour afficher le rendu
+                const rawUrl = `https://raw.githubusercontent.com/${REPO}/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+                fileUrl = `https://htmlpreview.github.io/?${rawUrl}`;
+              } else {
+                // Pour PDF et autres : lien GitHub normal
+                fileUrl = `https://github.com/${REPO}/blob/main/${course.section}.${course.matiere}/${fichier.fichier}`;
+              }
+              
+              const badge = document.createElement("a");
+              badge.href = fileUrl;
+              badge.target = "_blank";
+              badge.className = `fichier-badge ${extension}`;
+              
+              const nomSpan = document.createElement("span");
+              nomSpan.textContent = fichier.nom;
+              
+              const typeSpan = document.createElement("span");
+              typeSpan.className = "fichier-type";
+              typeSpan.textContent = extension.toUpperCase();
+              
+              badge.appendChild(nomSpan);
+              badge.appendChild(typeSpan);
+              fichiersContainer.appendChild(badge);
+            });
+            
+            matiereDiv.appendChild(fichiersContainer);
+          }
+          
+          section.appendChild(matiereDiv);
+        });
+
+        container.appendChild(section);
+      });
+    }
+
+    function filterCourses(searchTerm) {
+      const term = searchTerm.toLowerCase().trim();
+      
+      if (term === "") {
+        displayCourses(allData);
+        return;
+      }
+
+      const filtered = {};
+
+      Object.keys(allData).forEach(section => {
+        const matchingCourses = allData[section].filter(course => {
+          const searchText = `${section} ${course.nom} ${course.resume}`.toLowerCase();
+          return searchText.includes(term);
+        });
+
+        if (matchingCourses.length > 0) {
+          filtered[section] = matchingCourses;
+        }
+      });
+
+      displayCourses(filtered);
+    }
+
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      filterCourses(e.target.value);
+    });
+
+    loadCourses();
+  </script>
+</body>
+</html>
